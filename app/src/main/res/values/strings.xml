@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Погода в Перми сейчас</string>
+    <string name="description">Погода: </string>
+    <string name="temp">Температура: </string>
+    <string name="feels_like">Ощущается как: </string>
+    <string name="temp_min">Мин. температура: </string>
+    <string name="temp_max">Макс. температура: </string>
+    <string name="pressure">Давление: </string>
+    <string name="humidity">Влажность: </string>
+    <string name="speed">Скорость ветра: </string>
+</resources>
