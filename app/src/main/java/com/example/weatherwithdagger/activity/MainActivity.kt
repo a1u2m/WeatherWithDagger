@@ -12,6 +12,7 @@ import com.example.weatherwithdagger.R
 import com.example.weatherwithdagger.model.OpenWeatherMapApi
 import com.example.weatherwithdagger.model.Response
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.make
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
@@ -85,10 +86,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(t: Throwable?) {
-                    Snackbar.make(
-                        requireViewById(R.id.main_view),
+                    Toast.makeText(applicationContext,
                         resources.getString(R.string.error),
-                        Snackbar.LENGTH_LONG
+                        Toast.LENGTH_LONG
                     ).show()
                     if (t != null) {
                         Log.d(TAG, "onError: ${t.message}")
