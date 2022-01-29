@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import com.example.weatherwithdagger.di.MyToast
 import com.example.weatherwithdagger.R
+import com.example.weatherwithdagger.di.App
 import com.example.weatherwithdagger.model.OpenWeatherMapApi
 import com.example.weatherwithdagger.model.Response
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.make
 import com.squareup.picasso.Picasso
+import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -86,10 +86,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(t: Throwable?) {
-                    Toast.makeText(applicationContext,
-                        resources.getString(R.string.error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    val myToastLazy: Lazy<MyToast> = (application as App).appComponent.getMyToast()
+                    val myToast = myToastLazy.get()
+                    myToast.show()
                     if (t != null) {
                         Log.d(TAG, "onError: ${t.message}")
                     } else {
