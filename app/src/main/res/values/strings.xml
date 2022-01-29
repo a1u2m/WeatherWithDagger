@@ -8,4 +8,6 @@
     <string name="pressure">Давление: </string>
     <string name="humidity">Влажность: </string>
     <string name="speed">Скорость ветра: </string>
+    <string name="loading">Идет получение данных погоды</string>
+    <string name="error">Произошла ошибка при загрузке данных, проверьте подключение к сети</string>
 </resources>

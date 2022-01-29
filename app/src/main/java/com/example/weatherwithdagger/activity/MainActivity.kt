@@ -1,16 +1,20 @@
-package com.example.weatherwithdagger
+package com.example.weatherwithdagger.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import com.example.weatherwithdagger.R
+import com.example.weatherwithdagger.model.OpenWeatherMapApi
 import com.example.weatherwithdagger.model.Response
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subscribers.DisposableSubscriber
 import retrofit2.Retrofit
@@ -25,8 +29,6 @@ class MainActivity : AppCompatActivity() {
     private val UNITS = "metric"
     private val TAG = "MainActivity"
 
-    lateinit var pictureLink: String
-
     lateinit var icon: AppCompatImageView
     lateinit var description: AppCompatTextView
     lateinit var temp: AppCompatTextView
@@ -34,14 +36,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var pressure: AppCompatTextView
     lateinit var humidity: AppCompatTextView
     lateinit var speed: AppCompatTextView
+    lateinit var loading: AppCompatTextView
+    lateinit var progressBar: ProgressBar
 
-    val retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .baseUrl("https://api.openweathermap.org")
         .build()
 
-    val api = retrofit.create(OpenWeatherMapApi::class.java)
+    private val api = retrofit.create(OpenWeatherMapApi::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,34 +63,44 @@ class MainActivity : AppCompatActivity() {
                 override fun onNext(t: Response?) {
                     Log.d(TAG, "onNext")
 
-                    description.text = "${description.text} ${t?.weather?.get(0)?.description?.capitalize()}"
+                    description.text =
+                        "${description.text} ${t?.weather?.get(0)?.description?.capitalize()}"
                     temp.text = "${temp.text} ${t?.main?.temp}°C"
                     feelsLike.text = "${feelsLike.text} ${t?.main?.feelsLike}°C"
                     pressure.text = "${pressure.text} ${t?.main?.pressure} мм рт. ст."
                     humidity.text = "${humidity.text} ${t?.main?.humidity}%"
                     speed.text = "${speed.text} ${t?.wind?.speed} м/с"
-                    pictureLink = "https://openweathermap.org/img/wn/${t?.weather?.get(0)?.icon}@2x.png"
+
+                    val pictureLink =
+                        "https://openweathermap.org/img/wn/${t?.weather?.get(0)?.icon}@2x.png"
 
                     Picasso.get()
                         .load(pictureLink)
                         .error(R.drawable.ic_weather_placeholder)
                         .into(icon)
 
+                    loading.visibility = View.GONE
+                    progressBar.visibility = View.GONE
+
                 }
 
                 override fun onError(t: Throwable?) {
+                    Snackbar.make(
+                        requireViewById(R.id.main_view),
+                        resources.getString(R.string.error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     if (t != null) {
                         Log.d(TAG, "onError: ${t.message}")
+                    } else {
+                        Log.d(TAG, "onError: t == null")
                     }
                 }
 
                 override fun onComplete() {
                     Log.d(TAG, "onComplete")
                 }
-            }); {
-
-        }
-
+            })
     }
 
     private fun initViews() {
@@ -98,5 +112,7 @@ class MainActivity : AppCompatActivity() {
         humidity = findViewById(R.id.humidity)
         speed = findViewById(R.id.speed)
         icon.setImageResource(R.drawable.ic_weather_placeholder)
+        loading = findViewById(R.id.loading)
+        progressBar = findViewById(R.id.progress_bar)
     }
 }

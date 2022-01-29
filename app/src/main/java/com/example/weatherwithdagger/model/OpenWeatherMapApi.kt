@@ -1,4 +1,4 @@
-package com.example.weatherwithdagger
+package com.example.weatherwithdagger.model
 
 import com.example.weatherwithdagger.model.Response
 import io.reactivex.rxjava3.core.Flowable

@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_light"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
@@ -21,59 +22,79 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/description"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/description" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/temp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description"
-        android:text="@string/temp" />
+        app:layout_constraintTop_toBottomOf="@id/description" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/feels_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/feels_like"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/temp"
-        app:layout_constraintTop_toBottomOf="@id/description"
-        android:text="@string/feels_like" />
+        app:layout_constraintTop_toBottomOf="@id/description" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/pressure"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/temp"
-        android:text="@string/pressure" />
+        app:layout_constraintTop_toBottomOf="@id/temp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/humidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/humidity"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/pressure"
-        app:layout_constraintTop_toBottomOf="@id/temp"
-        android:text="@string/humidity"/>
+        app:layout_constraintTop_toBottomOf="@id/temp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/speed"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pressure"
-        android:text="@string/speed" />
+        app:layout_constraintTop_toBottomOf="@id/pressure" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/loading"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speed" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
