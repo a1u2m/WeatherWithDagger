@@ -24,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val API_KEY = "511180"
-    private val APP_ID = "3767cbc63512e48175b64b1b5664d14c"
+    private val APP_ID = "511180"
+    private val API_KEY = "###"
     private val LANG = "ru"
     private val UNITS = "metric"
     private val TAG = "MainActivity"
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
-        val flowable: Flowable<Response> = api.getResponse(API_KEY, APP_ID, LANG, UNITS)
+        val flowable: Flowable<Response> = api.getResponse(APP_ID, API_KEY, LANG, UNITS)
 
         flowable.take(1)
             .subscribeOn(Schedulers.io())
